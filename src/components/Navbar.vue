@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <v-app-bar
             color="grey darken-4"
@@ -13,26 +12,15 @@
                 single-line
                 placeholder="Search for respository"
                 v-model="searchRepository"
-                @keyup.enter="onSendRepository">
+                @keyup.enter="onSearchRepositories">
             </v-text-field>
         </v-app-bar>
     </div>
-
-    <!--<ul class="nav-container">
-            <li class="item-icon"><img src="../assets/logo.png" alt="logo" style="width:40%"></li>
-            <span></span>
-            <li 
-            class="item"
-            v-for="option in options"
-            :key="option"
-            @click="updateItem(option)"
-            :class="{ 'item-selected': itemSelected === option }">
-                {{ option }}
-            </li>
-        </ul>-->
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     name: 'Navbar',
     data() {
@@ -40,9 +28,12 @@ export default {
             searchRepository: '',
         }
     },
+
     methods: {
-        onSendRepository() {
-            this.$emit('request-repository', this.searchRepository, true)
+        ...mapActions(['fetchRepositories', 'onLoading']),
+        onSearchRepositories() {
+            this.onLoading()
+            this.fetchRepositories(this.searchRepository)
             this.searchRepository = ''
         }
     }
