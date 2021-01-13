@@ -5,10 +5,10 @@
       <v-toolbar-title>Searcher</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-text-field
+        v-model="searchRepository"
         hide-details
         single-line
         placeholder="Search for respository"
-        v-model="searchRepository"
         @keyup.enter="onSearchRepositories"
       >
       </v-text-field>

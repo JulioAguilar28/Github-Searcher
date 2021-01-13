@@ -2,10 +2,11 @@
   <v-app>
     <Navbar />
     <div class="repositories-container">
-      <Repository 
-      v-for="repository in getRepositories"
-      :key="repository.id"
-      :repository="repository" />
+      <Repository
+        v-for="repository in getRepositories"
+        :key="repository.id"
+        :repository="repository"
+      />
     </div>
     <div v-if="!getRepositories.length && !getLoading && !getError">
       <RepositoryNotFound />
@@ -13,9 +14,7 @@
     <div v-if="getError">
       <Error />
     </div>
-    <v-overlay
-      :value="getLoading"
-    >
+    <v-overlay :value="getLoading">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
       <p>Loading...</p>
     </v-overlay>
@@ -39,41 +38,38 @@ export default {
     RepositoryNotFound,
     Error
   },
-
-  methods: {
-    ...mapActions(['fetchRepositories']),
-  },
-
   computed: {
     ...mapGetters(['getRepositories', 'getLoading', 'getError'])
   },
-
   mounted() {
     this.fetchRepositories('vue')
+  },
+  methods: {
+    ...mapActions(['fetchRepositories'])
   }
-};
+}
 </script>
 
 <style scoped>
+.repositories-container {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 600px) {
   .repositories-container {
     display: grid;
     grid-template-rows: auto;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
   }
+}
 
-  @media (max-width: 600px) {
-    .repositories-container {
-      display: grid;
-      grid-template-rows: auto;
-      grid-template-columns: 1fr;
-    }
+@media (min-width: 600px) and (max-width: 960px) {
+  .repositories-container {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr;
   }
-
-  @media (min-width: 600px) and (max-width: 960px) {
-    .repositories-container {
-      display: grid;
-      grid-template-rows: auto;
-      grid-template-columns: 1fr 1fr;
-    }
-  }
+}
 </style>

@@ -5,7 +5,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import store from './store'
 
 import App from './App.vue'
-import vuetify from './plugins/vuetify';
+import vuetify from './plugins/vuetify'
 
 Vue.use(BootstrapVue)
 
