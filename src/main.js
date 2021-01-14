@@ -6,7 +6,7 @@ import store from './store'
 
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
-import vueRouter from './plugins/vue-router'
+import router from './plugins/vue-router'
 
 Vue.use(BootstrapVue)
 
@@ -15,6 +15,6 @@ Vue.config.productionTip = false
 new Vue({
   vuetify,
   store,
-  vueRouter,
+  router,
   render: h => h(App)
 }).$mount('#app')

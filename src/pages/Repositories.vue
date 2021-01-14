@@ -1,9 +1,44 @@
 <template>
-  <div></div>
+  <div>
+    <div class="repositories-container">
+      <Repository />
+    </div>
+    <v-overlay :value="getLoading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+      <p>Loading...</p>
+    </v-overlay>
+  </div>
 </template>
 
 <script>
-export default {}
+import Repository from '../components/Repository'
+
+export default {
+  name: 'Repositories',
+  components: { Repository }
+}
 </script>
 
-<style></style>
+<style>
+.repositories-container {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 600px) {
+  .repositories-container {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 960px) {
+  .repositories-container {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+</style>
