@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'Navbar',
@@ -28,10 +28,9 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchRepositories', 'onLoading']),
+    ...mapMutations('repositories', ['setRepository']),
     onSearchRepositories() {
-      this.onLoading()
-      this.fetchRepositories(this.searchRepository)
+      this.setRepository(this.searchRepository)
       this.searchRepository = ''
     }
   }

@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="repositories-container">
-      <Repository />
+      <!-- <Repository /> -->
     </div>
-    <v-overlay :value="getLoading">
+    <v-overlay :value="false">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
       <p>Loading...</p>
     </v-overlay>
@@ -11,11 +11,15 @@
 </template>
 
 <script>
-import Repository from '../components/Repository'
+// import Repository from '../components/Repository'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Repositories',
-  components: { Repository }
+  computed: {
+    ...mapState({ repository: state => state.repositories.repository })
+  }
+  // components: { Repository }
 }
 </script>
 

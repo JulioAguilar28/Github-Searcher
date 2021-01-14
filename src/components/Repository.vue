@@ -32,7 +32,7 @@ export default {
   props: {
     repository: {
       type: Object,
-      required: true
+      default: new Object()
     }
   },
   data() {

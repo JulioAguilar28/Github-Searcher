@@ -6,11 +6,11 @@
 </template>
 
 <script>
+import Navbar from './components/Navbar'
+
 export default {
   name: 'App',
-  mounted() {
-    this.$router.push('/repositories')
-  }
+  components: { Navbar }
 }
 </script>
 

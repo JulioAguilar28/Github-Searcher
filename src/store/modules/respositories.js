@@ -1,20 +1,14 @@
-import axios from 'axios'
-
 const state = {
-  repositories: [],
+  repository: 'vue',
   error: false,
   loading: true
 }
 
-const getters = {
-  getRepositories: state => state.repositories,
-  getLoading: state => state.loading,
-  getError: state => state.error
-}
+const getters = {}
 
 const mutations = {
-  setRepositories: (state, payload) => {
-    state.repositories = payload
+  setRepository: (state, repository) => {
+    state.repository = repository
   },
   setLoading: (state, payload) => {
     state.loading = payload
@@ -24,27 +18,10 @@ const mutations = {
   }
 }
 
-const actions = {
-  async fetchRepositories({ commit }, repository) {
-    var response = await axios.get(
-      `https://api.github.com/search/repositories?q=${repository}&sort=stars&order=desc`
-    )
-
-    if (response.statusText === 'OK') {
-      var repositories = await response.data.items
-      commit('setRepositories', repositories)
-      commit('setLoading', false)
-    } else {
-      commit('setError', true)
-    }
-  },
-
-  onLoading({ commit }) {
-    commit('setLoading', true)
-  }
-}
+const actions = {}
 
 export default {
+  namespaced: true,
   state,
   getters,
   mutations,
