@@ -3,7 +3,7 @@
     <div class="repositories-container">
       <!-- <Repository /> -->
     </div>
-    <v-overlay :value="false">
+    <v-overlay :value="loading">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
       <p>Loading...</p>
     </v-overlay>
@@ -13,11 +13,40 @@
 <script>
 // import Repository from '../components/Repository'
 import { mapState } from 'vuex'
+import { repositories as repositoriesRoute } from '../components/routes'
+import Repository from '../models/Repository'
 
 export default {
   name: 'Repositories',
+  data() {
+    return {
+      repositories: [],
+      loading: false
+    }
+  },
   computed: {
-    ...mapState({ repository: state => state.repositories.repository })
+    ...mapState({ repositoryName: state => state.repositories.repository })
+  },
+  mounted() {
+    this.getRepositories()
+  },
+  methods: {
+    async getRepositories() {
+      if (!this.loading) {
+        try {
+          this.loading = true
+          const response = await this.$axios.get(
+            repositoriesRoute.getByName(this.repositoryName)
+          )
+          const items = response.data.items
+          if (items.length > 0)
+            this.repositories = items.map(item => Repository.parse(item))
+        } catch (error) {
+          console.error({ error })
+        }
+        this.loading = false
+      }
+    }
   }
   // components: { Repository }
 }
