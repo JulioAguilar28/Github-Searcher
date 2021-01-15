@@ -8,8 +8,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  name: 'RepositoryNotFound'
+  name: 'RepositoryNotFound',
+  computed: {
+    ...mapState({ repository: state => state.repositories.repository })
+  },
+  watch: {
+    repository: {
+      handler() {
+        this.$router.replace('/repositories')
+      }
+    }
+  }
 }
 </script>
 
