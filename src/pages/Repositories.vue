@@ -1,7 +1,17 @@
 <template>
   <div>
     <div class="repositories-container">
-      <!-- <Repository /> -->
+      <Repository
+        v-for="repository in repositories"
+        :id="repository.id"
+        :key="repository.id"
+        :name="repository.name"
+        :full-name="repository.fullName"
+        :description="repository.description"
+        :language="repository.language"
+        :stars="repository.stars"
+        :forks="repository.forks"
+      />
     </div>
     <v-overlay :value="loading">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -11,13 +21,14 @@
 </template>
 
 <script>
-// import Repository from '../components/Repository'
+import Repository from '../components/Repository'
 import { mapState } from 'vuex'
 import { repositories as repositoriesRoute } from '../components/routes'
-import Repository from '../models/Repository'
+import RepositoryModel from '../models/Repository'
 
 export default {
   name: 'Repositories',
+  components: { Repository },
   data() {
     return {
       repositories: [],
@@ -26,6 +37,13 @@ export default {
   },
   computed: {
     ...mapState({ repositoryName: state => state.repositories.repository })
+  },
+  watch: {
+    repositoryName: {
+      handler() {
+        this.getRepositories()
+      }
+    }
   },
   mounted() {
     this.getRepositories()
@@ -40,15 +58,16 @@ export default {
           )
           const items = response.data.items
           if (items.length > 0)
-            this.repositories = items.map(item => Repository.parse(item))
+            this.repositories = items.map(item => RepositoryModel.parse(item))
+          else this.$router.replace('/notFound')
         } catch (error) {
+          this.$router.replace('/error')
           console.error({ error })
         }
         this.loading = false
       }
     }
   }
-  // components: { Repository }
 }
 </script>
 
